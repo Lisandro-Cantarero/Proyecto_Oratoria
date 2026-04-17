@@ -156,7 +156,7 @@ def ejecutar_pipeline_audio(ruta_audio: str, id_sesion: str = "test_01") -> Dict
 
 if __name__ == "__main__":
     # Prueba del orquestador unificado
-    archivo_prueba = "chico.wav" # <-- Puedes poner aquí el audio de pánico cuando lo grabes
+    archivo_prueba = "chico.wav" 
     
     if os.path.exists(archivo_prueba):
         reporte_final = ejecutar_pipeline_audio(archivo_prueba, "PRUEBA_02_INTEGRADA")
