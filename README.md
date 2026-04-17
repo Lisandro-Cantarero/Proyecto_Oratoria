@@ -60,6 +60,7 @@ El sistema exportará automáticamente un informe en PDF dentro de la carpeta `/
 
 ## Condiciones y Recomendaciones
 
+* **Calidad de Audio**: El audio debe ser grabado con un dispositivo cercano, como un micrófono de solapa. Ser grabado desde la distancia con el micrófono integrado del dispositivo provocará que los datos acústicos no se comporten como deberían para un análisis preciso.
 * **Iluminación**: Se requiere una fuente de luz frontal clara para que MediaPipe detecte los landmarks faciales y corporales correctamente.
 * **Encuadre**: El orador debe estar centrado, preferiblemente de la cintura hacia arriba (plano medio), para permitir el seguimiento de las manos y el torso.
 * **Posición de Cámara**: El sistema incluye un offset compensatorio de -12° para cámaras de laptops en escritorio.
