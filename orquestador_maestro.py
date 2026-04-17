@@ -8,9 +8,7 @@ import pandas as pd
 import torch
 import whisperx
 
-# ==========================================
-# IMPORTACIONES CIENTÍFICAS
-# ==========================================
+
 from modular.preprocesamiento_acustico import procesar_audio_oratoria
 from modular.modulo_ritmo_transcripcion import calcular_ritmo_whisper
 from modular.modulo_telemetria_local import extraer_telemetria_local
