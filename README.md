@@ -1,6 +1,6 @@
 # Auditor Multimodal de Oratoria con IA (Proyecto de Grado)
 
-Este sistema es una herramienta de **Investigación Aplicada** diseñada para evaluar de forma objetiva las habilidades de oratoria mediante Inteligencia Artificial. Utiliza una arquitectura híbrida que combina procesamiento en tiempo real con una auditoría posterior para generar diagnósticos detallados sobre el lenguaje corporal, la mirada, las emociones y la fluidez verbal.
+Este sistema es una herramienta de **Investigación Aplicada** diseñada para evaluar de forma objetiva las habilidades de oratoria mediante Inteligencia Artificial. Utiliza una arquitectura híbrida que integra el procesamiento en tiempo real con una auditoría posterior automatizada para generar diagnósticos detallados sobre el lenguaje corporal, la mirada, las emociones y la fluidez verbal.
 
 ## Requisitos Mínimos del Sistema
 
@@ -34,22 +34,16 @@ pip install -r requirements.txt
 
 ## Modo de Uso
 
-El sistema opera mediante una orquestación en etapas:
+El sistema opera de forma automatizada mediante un único punto de entrada. Al ejecutar el archivo principal, el sistema gestiona secuencialmente todas las etapas del análisis:
 
-### Fase de Captura (Tiempo Real)
-Ejecuta `main.py` para iniciar la grabación y el análisis de gestos adaptadores y postura.
 ```bash
 python main.py
 ```
 
-### Fase de Auditoría (Post-Hoc)
-Una vez finalizada la grabación, el `orquestador_maestro.py` procesa los datos (pose 3D, cinemática y emociones).
-```bash
-python orquestador_maestro.py
-```
-
-### Generación de Reporte
-El sistema exportará automáticamente un informe en PDF dentro de la carpeta `/reportes` con las métricas finales.
+### Flujo Automático de Procesamiento:
+1. **Captura en Tiempo Real**: Inicia la grabación de video/audio y realiza el seguimiento de gestos adaptadores y postura.
+2. **Auditoría Posterior (Post-Hoc)**: Al finalizar la grabación, el sistema activa automáticamente la orquestación para el cálculo de pose 3D, cinemática y emociones.
+3. **Generación de Reporte**: Se exporta de forma inmediata un informe en PDF dentro de la carpeta `/reportes` con los resultados finales.
 
 ## Métricas Evaluadas
 
@@ -60,12 +54,11 @@ El sistema exportará automáticamente un informe en PDF dentro de la carpeta `/
 
 ## Condiciones y Recomendaciones
 
-* **Set de Grabación**: La toma debe realizarse a una distancia aproximada de 2 a 3 metros de la computadora. Evite grabar a distancias cortas (ej. 1 metro), ya que esto altera el comportamiento de los datos y afecta la precisión del seguimiento corporal.
-* **Calidad de Audio**: El audio debe ser grabado con un dispositivo cercano, como un micrófono de solapa. Ser grabado desde la distancia con el micrófono integrado del dispositivo provocará que los datos acústicos no se comporten como deberían para un análisis preciso.
-* **Iluminación**: Se requiere una fuente de luz frontal clara para que MediaPipe detecte los landmarks faciales y corporales correctamente.
-* **Encuadre**: El orador debe estar centrado, preferiblemente de la cintura hacia arriba (plano medio), para permitir el seguimiento de las manos y el torso.
-* **Posición de Cámara**: El sistema incluye un offset compensatorio de -12° para cámaras de laptops en escritorio.
-* **Ambiente**: Se recomienda un fondo neutro para evitar ruidos visuales en el cálculo de la energía cinética.
+* **Set de Grabación**: La toma debe realizarse a una distancia aproximada de 2 a 3 metros de la computadora. Grabar a distancias cortas (ej. 1 metro) altera el comportamiento de los datos y afecta la precisión del seguimiento corporal.
+* **Calidad de Audio**: El audio debe ser grabado con un dispositivo cercano, como un micrófono de solapa. El uso de micrófonos integrados a larga distancia degradará la calidad de los datos acústicos necesarios para el análisis.
+* **Iluminación**: Se requiere luz frontal clara para la detección correcta de landmarks faciales y corporales.
+* **Encuadre**: El orador debe estar centrado en un plano medio (cintura hacia arriba) para permitir el rastreo de manos y torso.
+* **Posición de Cámara**: El sistema incluye un offset compensatorio de -12° diseñado para cámaras de laptops situadas en escritorios.
 
 ---
 
