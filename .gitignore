@@ -1,0 +1,51 @@
+# ==========================================
+# ENTORNOS VIRTUALES Y SISTEMA
+# ==========================================
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.vscode/
+.idea/
+
+# ==========================================
+# ARCHIVOS MULTIMEDIA (PESADOS)
+# ==========================================
+# Ignorar audios y videos crudos de entrada y salida
+*.wav
+*.mp4
+*.avi
+audio.wav
+videos_entrada/
+data/
+
+# ==========================================
+# MODELOS DE IA Y PESOS (GIGABYTES)
+# ==========================================
+# Los modelos .keras, .h5 y .tflite suelen ser muy pesados para Git
+*.keras
+*.tflite
+*.h5
+*.task
+modelo_muletillas_final.h5
+modelo_muletillas_v2.keras
+
+# ==========================================
+# RESULTADOS Y DATOS EXPORTADOS
+# ==========================================
+# Ignorar las carpetas de salida de reportes y archivos JSON
+reportes/
+json/
+datos_exportados/
+Dataset_Aumentado/
+Auditoria_Forense_*.pdf
+*.csv
+
+# ==========================================
+# ARCHIVOS TEMPORALES Y OTROS
+# ==========================================
+*.llc
+nota.py

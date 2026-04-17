@@ -1,0 +1,80 @@
+{
+    "metadata_orador": {
+        "id": "VID_20260326_100012",
+        "duracion_video_segundos": 300.89,
+        "tiempo_procesamiento_segundos": 1446.45
+    },
+    "metricas_globales": {
+        "postura_pTM": {
+            "pTM_postura": 0.002768855908738461,
+            "pTM_sway": 0.0,
+            "pTM_inactividad": 0.0,
+            "pTM_perfil": 0.0
+        },
+        "comportamiento": {
+            "motion_energy_mean": 1.420638545386356,
+            "motion_energy_max": 90.0,
+            "motion_energy_std": 5.3242111451148215,
+            "total_stage_coverage": 33.37123591066342,
+            "porcentaje_tiempo_zona_valida": 98.79277882379
+        },
+        "mirada_y_cabeza": {
+            "OpenOPAF": {
+                "porcentaje_mirada_audiencia": 55.01,
+                "nivel_dominio": "Deficiente",
+                "habilidad_dominada": false,
+                "desglose": {
+                    "Front": 4967,
+                    "Up": 565,
+                    "Down": 0,
+                    "Right": 1729,
+                    "Left": 1074,
+                    "Back": 694,
+                    "None": 0
+                }
+            },
+            "Rastreo_Ocular_Secundario": {
+                "porcentaje_contacto_visual_real": 99.88,
+                "sd_movimiento_ocular": 0.0186,
+                "desglose_ojos_en_front": {
+                    "Fijamente": 4961,
+                    "Distraido": 6
+                }
+            },
+            "Chen_Metrics": {
+                "Face_Left_Right_Sd": 39.02496349816201,
+                "Face_Up_Down_Sd": 20.356319962549705
+            }
+        },
+        "nerviosismo": {
+            "Total_Toques_Faciales": 0,
+            "Tiempo_Total_Facial_Segundos": 0.0,
+            "Total_Frotamientos_Manos": 0,
+            "Tiempo_Total_Frotamiento_Segundos": 0.0
+        },
+        "emociones_faciales": {
+            "Joyness_Metrics": {
+                "mean": 0.22720082384055995,
+                "sd": 0.3308996861087186,
+                "kurtosis": 0.5074812826449313,
+                "skewness": 1.4302098308378683
+            },
+            "Total_Emotion_Metrics": {
+                "mean": 0.16418950512969754,
+                "sd": 0.14647501819459016,
+                "kurtosis": 0.37291345201413106,
+                "skewness": 1.306603383665391
+            },
+            "P2N_Ratio_Metrics": {
+                "mean": 1.5051724159408828,
+                "sd": 2.3408957153430188,
+                "kurtosis": 7.050747129051272,
+                "skewness": 2.4959420913251074
+            },
+            "estadisticas_generales": {
+                "total_frames_analizados": 105,
+                "duracion_analizada_segundos": 105.0
+            }
+        }
+    }
+}
