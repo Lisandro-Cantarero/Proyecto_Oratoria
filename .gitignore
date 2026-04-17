@@ -1,12 +1,12 @@
-# 1. Bloquear absolutamente todo por defecto
+
 /*
 
-# 2. Abrir carpetas de lógica (SÍ se suben)
+
 !modular/
 !corporal/
 !video/
 
-# 3. Archivos raíz esenciales (SÍ se suben)
+
 !main.py
 !orquestador_maestro.py
 !orquestador_principal.py
@@ -15,7 +15,7 @@
 !README.md
 !.gitignore
 
-# 4. Reglas de limpieza interna (NO se suben nunca)
+
 **/__pycache__/
 **/*.pyc
 **/*.pyo
