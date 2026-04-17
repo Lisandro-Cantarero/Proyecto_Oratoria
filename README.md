@@ -60,6 +60,7 @@ El sistema exportará automáticamente un informe en PDF dentro de la carpeta `/
 
 ## Condiciones y Recomendaciones
 
+* **Set de Grabación**: La toma debe realizarse a una distancia aproximada de 2 a 3 metros de la computadora. Evite grabar a distancias cortas (ej. 1 metro), ya que esto altera el comportamiento de los datos y afecta la precisión del seguimiento corporal.
 * **Calidad de Audio**: El audio debe ser grabado con un dispositivo cercano, como un micrófono de solapa. Ser grabado desde la distancia con el micrófono integrado del dispositivo provocará que los datos acústicos no se comporten como deberían para un análisis preciso.
 * **Iluminación**: Se requiere una fuente de luz frontal clara para que MediaPipe detecte los landmarks faciales y corporales correctamente.
 * **Encuadre**: El orador debe estar centrado, preferiblemente de la cintura hacia arriba (plano medio), para permitir el seguimiento de las manos y el torso.
