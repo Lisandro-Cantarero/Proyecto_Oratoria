@@ -1,21 +1,23 @@
 import time
 
 class HeadPoseAnalyzer:
-
+    """
+    Analizador 2D de Movimiento de Cabeza (Tiempo Real).
+    Alineado al estándar OpenOPAF: cámara frontal a la altura de los ojos,
+    sin compensación por ángulos de contrapicado.
+    """
     def __init__(self):
-        # --- UMBRALES CALIBRADOS PARA CONTRAPICADO (LAPTOP) ---
-        # Como la cámara está abajo, el tabique siempre se ve más "arriba" que las orejas en 2D.
-        # Restamos 0.15 a todos los umbrales para bajar el centro de gravedad lógico.
-        offset_laptop = 0.15 
-
-        self.ratio_down_enter = 0.35 - offset_laptop
-        self.ratio_down_exit = 0.25 - offset_laptop
-        self.ratio_up_enter = -0.15 - offset_laptop
-        self.ratio_up_exit = -0.05 - offset_laptop
+        # --- UMBRALES FRONTALES PUROS ---
+        # Se evalúa la posición geométrica real de la nariz respecto a las orejas.
+        # En una toma frontal nivelada, la nariz suele estar ligeramente por debajo de las orejas.
+        
+        self.ratio_down_enter = 0.35
+        self.ratio_down_exit = 0.25
+        self.ratio_up_enter = -0.15
+        self.ratio_up_exit = -0.05
 
         self.head_state = "NORMAL"
         self.violation_start_time = None
-        
         
         self.time_limit = 2.0 
 
@@ -37,7 +39,7 @@ class HeadPoseAnalyzer:
 
             avg_ear_y = (l_ear.y + r_ear.y) / 2.0
             
-            # Cálculo de Inclinación 2D
+            # Cálculo de Inclinación 2D (Pitch ratio)
             pitch_ratio = (nose.y - avg_ear_y) / face_width
 
             if self.head_state == "DOWN":
@@ -62,7 +64,7 @@ class HeadPoseAnalyzer:
             
             pitch_ratio = (nose.y - ear_mean_y) / face_width
             
-            # Usar los mismos umbrales compensados
+            # Usar los umbrales frontales sin alteraciones
             if self.head_state == "DOWN":
                 if pitch_ratio < self.ratio_down_exit: self.head_state = "NORMAL"
             elif self.head_state == "UP":
@@ -85,7 +87,6 @@ class HeadPoseAnalyzer:
             return {"is_looking": True, "error_type": ""}
         else:
             if self.violation_start_time is None:
-                
                 self.violation_start_time = time.time()
                 return {"is_looking": True, "error_type": ""}
             elif (time.time() - self.violation_start_time) > self.time_limit:
