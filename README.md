@@ -48,17 +48,19 @@ python main.py
 ## Métricas Evaluadas
 
 * **Kinésica**: Porcentaje de tiempo en postura cerrada (oclusión), inactividad gestual y balanceo excesivo (Sway).
-* **Contacto Visual**: Estimación de la mirada mediante pose 3D (SolvePnP) con compensación de ángulo para laptops.
+* **Contacto Visual**: Estimación de la mirada mediante pose 3D (SolvePnP) basada en la proporción geométrica facial real (ojos, nariz, orejas y boca).
 * **Biometría Emocional**: Análisis de afabilidad (Joyness), tensión facial (Ratio P2N) y expresividad global.
 * **Análisis Acústico**: Detección de muletillas y fluidez del discurso.
 
 ## Condiciones y Recomendaciones
 
+
+
 * **Set de Grabación**: La toma debe realizarse a una distancia aproximada de 2 a 3 metros de la computadora. Grabar a distancias cortas (ej. 1 metro) altera el comportamiento de los datos y afecta la precisión del seguimiento corporal.
 * **Calidad de Audio**: El audio debe ser grabado con un dispositivo cercano, como un micrófono de solapa. El uso de micrófonos integrados a larga distancia degradará la calidad de los datos acústicos necesarios para el análisis.
 * **Iluminación**: Se requiere luz frontal clara para la detección correcta de landmarks faciales y corporales.
-* **Encuadre**: El orador debe estar centrado en un plano medio (cintura hacia arriba) para permitir el rastreo de manos y torso.
-* **Posición de Cámara**: El sistema incluye un offset compensatorio de -12° diseñado para cámaras de laptops situadas en escritorios.
+* **Encuadre**: El orador debe estar centrado en un plano medio (cintura hacia arriba) para permitir el rastreo simultáneo de las manos, el torso y el rostro.
+* **Posición de Cámara (Crítico para la Mirada)**: La cámara debe situarse **estrictamente a la altura de los ojos** del orador y en posición completamente frontal. El sistema utiliza un cálculo geométrico tridimensional puro; por lo tanto, grabar en ángulos de contrapicado (ej. desde la cámara inferior de una laptop en un escritorio) invalidará las proporciones faciales y generará falsos positivos de "mirada al techo" o "mirada al suelo".
 
 ---
 
