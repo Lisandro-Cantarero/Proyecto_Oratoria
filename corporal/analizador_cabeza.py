@@ -5,8 +5,8 @@ import math
 class AnalizadorMirada:
     """
     Analizador de Dirección de la Mirada basado en Estimación de Pose 3D (solvePnP).
-    Adaptado para absorber ruido de hardware (jitter), sesgo de cámara en contrapicado 
-    y evaluación académica de 3 niveles (Excelente, Bueno, Deficiente).
+    Adaptado estrictamente al estándar OpenOPAF: cámara central sin offset de contrapicado,
+    y seguimiento geométrico usando ojos, nariz, orejas y boca.
     """
     def __init__(self):
         self.raw_yaw = []
@@ -19,15 +19,15 @@ class AnalizadorMirada:
         # -------------------------------------------------------------------
         self.umbral_yaw = 35.0   
         self.umbral_pitch = 30.0 
-        self.pitch_offset = -12.0         
+        # El offset compensatorio se ha eliminado para grabación a nivel de los ojos
 
         self.umbral_excelente = 85.0 
         self.umbral_bueno = 70.0     
 
-        
+        # Puntos 3D del modelo facial estándar OpenOPAF
         self.model_points = np.array([
             (0.0, 0.0, 0.0),             # Nariz (1): Origen
-            (0.0, -200.0, 50.0),         # Glabella (168): Arriba (Y-), Ligeramente atrás (Z+)
+            (0.0, 200.0, -50.0),         # Boca (14): Eje Y Positivo (Abajo), Ligeramente adelante
             (-225.0, -170.0, 135.0),     # Ojo Izq Pantalla (263)
             (225.0, -170.0, 135.0),      # Ojo Der Pantalla (33)
             (-350.0, 50.0, 200.0),       # Tragus Izq Pantalla (234)
@@ -56,9 +56,10 @@ class AnalizadorMirada:
         lms = face_landmarks.landmark
         alto, ancho = frame_shape
 
+        # Mapeo de landmarks 2D correspondientes al estándar (Nariz, Boca, Ojos, Orejas)
         puntos_2d = np.array([
             (lms[1].x * ancho, lms[1].y * alto),     
-            (lms[168].x * ancho, lms[168].y * alto), 
+            (lms[14].x * ancho, lms[14].y * alto),   # Se utiliza Landmark 14 (Centro de la boca) 
             (lms[263].x * ancho, lms[263].y * alto), 
             (lms[33].x * ancho, lms[33].y * alto),   
             (lms[234].x * ancho, lms[234].y * alto), 
@@ -78,7 +79,8 @@ class AnalizadorMirada:
             yaw = math.degrees(math.atan2(rmat[0, 2], rmat[2, 2]))
             
             self.raw_yaw.append(yaw)
-            self.raw_pitch.append(pitch + self.pitch_offset)
+            # Registro directo del pitch calculado por la matriz
+            self.raw_pitch.append(pitch)
 
             try:
                 iris_der_x = lms[468].x * ancho
