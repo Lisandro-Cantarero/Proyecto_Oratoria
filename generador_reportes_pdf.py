@@ -34,6 +34,11 @@ class GeneradorReporteElegante:
         elif 1.5 <= st <= 2.5: return "Modulación vocal adecuada.", "#f1c40f"
         else: return "Excelente variabilidad y expresividad vocal.", "#2ecc71"
 
+    def diag_volumen(self, std_db):
+        if std_db < 2.0: return "Volumen muy uniforme. Sugerencia: usar matices de intensidad para evitar monotonía.", "#e67e22"
+        elif 2.0 <= std_db <= 6.0: return "Excelente control y dinámica de volumen.", "#2ecc71"
+        else: return "Alta fluctuación de volumen. Se sugiere mantener una proyección más constante.", "#f1c40f"
+
     def diag_tics(self, tics):
         return ("Gestualidad tranquila y controlada.", "#2ecc71") if tics <= 3 else ("Movimientos adaptadores frecuentes. Oportunidad para relajar las manos.", "#e67e22")
 
@@ -54,6 +59,10 @@ class GeneradorReporteElegante:
         wpm = round(ritmo.get("tasa_global_wpm", 0), 1)
         sps = round(ritmo.get("articulation_rate_sps", 0), 2)
         tono_st = round(prosodia.get("tono_std_st", 0), 2)
+        
+        # --- NUEVAS MÉTRICAS DE VOLUMEN ---
+        rms_media_db = round(prosodia.get("rms_media_db", 0), 2)
+        rms_std_db = round(prosodia.get("rms_std_db", 0), 2)
         
         perfil_pragmatico = lexico.get("perfil_pragmatico", {})
         densidad_lex = sum(perfil_pragmatico.get("densidades", {}).values()) if perfil_pragmatico else 0
@@ -83,7 +92,6 @@ class GeneradorReporteElegante:
             html_chips_muletillas = "<div style='margin-top: 10px;'>"
             for palabra, conteo in sorted(frecuencias.items(), key=lambda x: x[1], reverse=True):
                 if conteo > 0:
-                    # Usamos un div en bloque en lugar de un span inline-block para evitar superposiciones
                     html_chips_muletillas += f"<div style='background-color: #f8f9f9; border: 1px solid #d5dbdb; border-left: 3px solid #3498db; border-radius: 2px; padding: 4px 8px; margin-bottom: 4px; font-size: 10px; color: #2c3e50;'><b>{palabra.upper()}</b>: {conteo} repeticiones</div>"
             html_chips_muletillas += "</div>"
         else:
@@ -97,8 +105,8 @@ class GeneradorReporteElegante:
         p_postura = vision.get("postura_pTM", {})
         postura_cerrada = round(p_postura.get("pTM_postura", 0) * 100, 1)
         postura_inactiva = round(p_postura.get("pTM_inactividad", 0) * 100, 1)
-        postura_sway = round(p_postura.get("pTM_sway", 0) * 100, 1)         
-        postura_perfil = round(p_postura.get("pTM_perfil", 0) * 100, 1)     
+        postura_sway = round(p_postura.get("pTM_sway", 0) * 100, 1)        
+        postura_perfil = round(p_postura.get("pTM_perfil", 0) * 100, 1)    
         
         cobertura_escenario = round(vision.get("comportamiento", {}).get("total_stage_coverage", 0), 1)
         
@@ -108,7 +116,6 @@ class GeneradorReporteElegante:
         nervios = vision.get("nerviosismo", {})
         tics_totales = nervios.get("Total_Toques_Faciales", 0) + nervios.get("Total_Frotamientos_Manos", 0)
         
-        # Sumatoria del tiempo total perdiendo energía en gestos adaptadores
         tiempo_tics_total = round(nervios.get("Tiempo_Total_Facial_Segundos", 0.0) + nervios.get("Tiempo_Total_Frotamiento_Segundos", 0.0), 1)
 
         emociones = vision.get("emociones_faciales", {})
@@ -120,18 +127,17 @@ class GeneradorReporteElegante:
         d_wpm, c_wpm = self.diag_fluidez(wpm)
         d_contacto, c_contacto = self.diag_contacto(mirada_pct)
         d_tono, c_tono = self.diag_tono(tono_st)
+        d_vol, c_vol = self.diag_volumen(rms_std_db) # Evaluación de volumen
         d_tics, c_tics = self.diag_tics(tics_totales)
         
         c_mul_acu = "#2ecc71" if mul_acusticas < 5 else "#e67e22"
         c_postura = "#2ecc71" if postura_cerrada < 15.0 else "#e67e22"
         c_p2n = "#2ecc71" if p2n_ratio > 0.5 else "#f1c40f"
         
-        # Colores para cinemática
         c_inactiva = "#2ecc71" if postura_inactiva < 15.0 else "#e67e22"
         c_sway = "#2ecc71" if postura_sway < 5.0 else "#e67e22"
         c_perfil = "#2ecc71" if postura_perfil < 10.0 else "#e67e22"
 
-        # Colores para emociones profundas
         c_joy = "#2ecc71" if joyness_mean > 0.05 else "#f1c40f"
         d_joy = "Rostro con micro-expresiones de apertura y empatía." if joyness_mean > 0.05 else "Expresión excesivamente seria. Se sugiere sonreír sutilmente para conectar."
         
@@ -288,6 +294,13 @@ class GeneradorReporteElegante:
                     <td>
                         <span class="metric-value" style="color: {c_tono};">{tono_st} Semitonos (Desviación Estándar)</span>
                         <span class="feedback">{d_tono}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Intensidad Vocal (Volumen)</th>
+                    <td>
+                        <span class="metric-value" style="color: {c_vol};">{rms_media_db} dB (Media) | {rms_std_db} dB (Variabilidad)</span>
+                        <span class="feedback">{d_vol}</span>
                     </td>
                 </tr>
                 <tr>
